@@ -1,4 +1,4 @@
-import serenity from 'serenity';
+import serenity from 'serenitydi';
 console.log(serenity);
 const model = {
   items: [],

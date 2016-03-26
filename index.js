@@ -1,3 +1,3 @@
-var serenity = require('./src/serenity');
+var serenity = require('./src/index');
 
 module.exports = serenity;

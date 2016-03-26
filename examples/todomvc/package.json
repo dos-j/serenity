@@ -14,5 +14,8 @@
     "babel": "^6.3.26"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "serenitydi": "^1.0.1"
+  }
 }
