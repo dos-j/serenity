@@ -18,24 +18,9 @@ export default class Injector {
       service,
       dependencies
     };
-
+    
     const injectables = this.services[name].dependencies.map(injectName => this.services[injectName].service());
     this.services[name].service(...injectables);
-  };
-
-  service = (service, name, dependencies) => {
-    const newDependencies = this.getDependencies(dependencies);
-
-    this.services[name] = new service(
-      ...newDependencies
-    );
-
-    return true;
-  };
-
-  getDependencies = (dependencies) => {
-    const newDependencies = Object.keys(dependencies).map(dependant => this.services[dependant]);
-    return newDependencies;
   };
 
 }

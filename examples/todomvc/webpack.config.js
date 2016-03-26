@@ -3,12 +3,15 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
-  output: { path: __dirname, filename: 'bundle.js' },
-  target: 'node',
-  module: {
+  output: { path: __dirname + '/dist', filename: 'bundle.js' },
+  resolve: {
+    modulesDirectories: ['node_modules', './'], //use shared library so we can do server side and client side rendering
+    extensions:         ['', '.js', '.jsx', '.css']
+  },
+ module: {
     loaders: [
       {
-        test: /.jsx?$/,
+        test: /.js?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {

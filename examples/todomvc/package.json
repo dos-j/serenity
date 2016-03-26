@@ -1,0 +1,18 @@
+{
+  "name": "serenity_todomvc",
+  "version": "1.0.0",
+  "description": "todomvc example built using serenity DI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "webpack": "^1.12.11",
+    "babel": "^6.3.26"
+  },
+  "author": "",
+  "license": "ISC"
+}
