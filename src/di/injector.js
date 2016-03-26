@@ -10,7 +10,7 @@ export default class Injector {
       throw `Tried to register a service which is not a function`;
     }
 
-    if (this.service.hasOwnProperty(name)) {
+    if (this.services.hasOwnProperty(name)) {
       throw `Service with name ${name} already registered`;
     }
 
