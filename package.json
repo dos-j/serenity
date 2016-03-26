@@ -1,6 +1,6 @@
 {
   "name": "serenitydi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lightweight JS framework for increased composition ability",
   "main": "index.js",
   "scripts": {
