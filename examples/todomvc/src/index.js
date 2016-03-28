@@ -1,11 +1,12 @@
-import serenity from 'serenitydi';
-console.log(serenity);
-const model = {
-  items: [],
-  selectedItem: null
-}; 
+import 'models';
+import { App } from 'components/index';
+import React from 'react';
+import { Router, Route, Link, browserHistory } from 'react-router';
+import { render } from 'react-dom';
 
-serenity.register(function() {
-  console.log('registering model');
-  return model;
-}, 'TodoModel', []);
+render((
+  <Router history={browserHistory}>
+    <Route path="/" component={App} />
+  </Router>
+), document.getElementById('app'));
+

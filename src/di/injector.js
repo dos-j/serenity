@@ -18,9 +18,20 @@ export default class Injector {
       service,
       dependencies
     };
-    
-    const injectables = this.services[name].dependencies.map(injectName => this.services[injectName].service());
-    this.services[name].service(...injectables);
+
+    this.runService(name);  
   };
+
+  runService = (serviceName) => {
+  
+    const injectables = this.services[serviceName].dependencies.map(
+      injectName => this.runService(injectName)
+    );
+  
+    return this.services[serviceName].service(...injectables);
+  };
+
+  fetch = dependencies => dependencies.map(serviceName => this.runService(serviceName));
+  
 
 }
