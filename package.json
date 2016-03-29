@@ -1,6 +1,6 @@
 {
   "name": "serenitydi",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Lightweight JS framework for increased composition ability",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "prepublish": "npm run compile",
     "test": "mocha --require babel-core/register test/",
     "build": "./node_modules/.bin/webpack ",
-    "buildExample": "./node_modules/.bin/webpack; cp bundle.js* examples/" 
+    "buildExample": "./node_modules/.bin/webpack; cp bundle.js* examples/"
   },
   "author": "",
   "license": "ISC",
