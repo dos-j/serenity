@@ -1,8 +1,8 @@
-import injector from './di/injector';
+import * as injector from './di/injector';
 
-const singletonInjector = new injector();
-export default singletonInjector;
+export ReactInjector from './ReactInjector';
+export default injector;
 
 if(window) {
-  window.serenity = singletonInjector;
+  window.serenity = injector;
 }

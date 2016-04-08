@@ -1,37 +1,37 @@
+import dataWrapper from './dataWrapper';
 
-export default class Injector {
+export const services = {};
 
-  constructor() {
-    this.services = {};
+export function register(service, name, dependencies) {
+  if (typeof service !== 'function') {
+    throw `Tried to register a service which is not a function`;
   }
 
-  register = (service, name, dependencies) => {
-    if (typeof service !== 'function') {
-      throw `Tried to register a service which is not a function`;
-    }
+  if (services.hasOwnProperty(name)) {
+    throw `Service with name ${name} already registered`;
+  }
 
-    if (this.services.hasOwnProperty(name)) {
-      throw `Service with name ${name} already registered`;
-    }
-
-    this.services[name] = {
-      service,
-      dependencies
-    };
-
-    this.runService(name);  
+  services[name] = {
+    service,
+    dependencies
   };
 
-  runService = (serviceName) => {
-  
-    const injectables = this.services[serviceName].dependencies.map(
-      injectName => this.runService(injectName)
-    );
-  
-    return this.services[serviceName].service(...injectables);
-  };
+  runService(name);  
+};
 
-  fetch = dependencies => dependencies.map(serviceName => this.runService(serviceName));
-  
+export function runService(serviceName) {
+  const injectables = services[serviceName].dependencies.map(
+    injectName => runService(injectName)
+  );
 
-}
+  return services[serviceName].service(...injectables);
+};
+
+export function registerData(service, name) {
+  register(service, name, []);
+};
+
+export function fetch(dependencies) {
+  return dependencies.map(serviceName => this.runService(serviceName));
+};
+

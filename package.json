@@ -8,7 +8,7 @@
     "prepublish": "npm run compile",
     "test": "mocha --require babel-core/register test/",
     "build": "./node_modules/.bin/webpack ",
-    "buildExample": "./node_modules/.bin/webpack; cp bundle.js* examples/"
+    "buildExample": "npm run compile; cp -R lib/ examples/todomvc/node_modules/serenitydi/lib/"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
     "webpack": "^1.12.11"
   }
 }

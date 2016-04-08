@@ -1,11 +1,15 @@
-
 import serenity from 'serenitydi';
 
-const model = {
-  items: [],
-  selectedItem: null
-}; 
+serenity.register(function() {
+  return function() {
+    console.log('action run');
+  };
+
+}, 'SampleAction', []);
 
 serenity.register(function() {
-  return model;
-}, 'TodoModel', []);
+  return function() {
+    console.log('action run 2');
+  };
+
+}, 'SampleAction2', []);

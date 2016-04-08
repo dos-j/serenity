@@ -1,0 +1,13 @@
+{
+  "parser": "Babel-ESLint",
+  "rules": {
+    "semi": 2,
+    "no-extra-semi": 2,
+    "valid-jsdoc": 1,
+    "no-new-func": 2,
+    "radix": 2,
+    "camelCase": 2,
+    "quotes": "single"
+  }
+
+}
