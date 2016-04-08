@@ -4,7 +4,7 @@ export const services = {};
 
 export function register(service, name, dependencies) {
   if (typeof service !== 'function') {
-    throw `Tried to register a service which is not a function`;
+    throw 'Tried to register a service which is not a function';
   }
 
   if (services.hasOwnProperty(name)) {
@@ -17,7 +17,7 @@ export function register(service, name, dependencies) {
   };
 
   runService(name);  
-};
+}
 
 export function runService(serviceName) {
   const injectables = services[serviceName].dependencies.map(
@@ -25,13 +25,13 @@ export function runService(serviceName) {
   );
 
   return services[serviceName].service(...injectables);
-};
+}
 
 export function registerData(service, name) {
   register(service, name, []);
-};
+}
 
 export function fetch(dependencies) {
   return dependencies.map(serviceName => this.runService(serviceName));
-};
+}
 

@@ -20,11 +20,11 @@ export default function(dataObject) {
     },
 
     dispatch(data) {
-      this.subscribers.forEach(subscriber => subscriber(this.data)) 
+      this.subscribers.forEach(subscriber => subscriber(this.data));
     },
 
     data: {
       ...dataObject
     }
   };
-};
+}

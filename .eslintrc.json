@@ -6,8 +6,7 @@
     "valid-jsdoc": 1,
     "no-new-func": 2,
     "radix": 2,
-    "camelCase": 2,
-    "quotes": "single"
+    "quotes": [2, "single"]
   }
 
 }
