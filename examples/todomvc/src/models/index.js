@@ -1,15 +1,20 @@
 import serenity from 'serenitydi';
 
-serenity.register(function() {
-  return function() {
-    console.log('action run');
-  };
 
-}, 'SampleAction', []);
+const model = {
+  items: ['Hello, World']
+};
 
-serenity.register(function() {
-  return function() {
-    console.log('action run 2');
-  };
+serenity.registerState(() => {
+  return model;
+}, 'TodoModel', []);
 
-}, 'SampleAction2', []);
+
+serenity.register((model) => {
+  return function(item) {
+    const currentData = model.data;
+    currentData.items.push(item);
+    model.set(currentData);
+  }
+
+}, 'SampleAction', ['TodoModel']);

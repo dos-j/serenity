@@ -27,8 +27,9 @@ export function runService(serviceName) {
   return services[serviceName].service(...injectables);
 }
 
-export function registerData(service, name) {
-  register(service, name, []);
+export function registerState(service, name) {
+  const dataInstance = dataWrapper(service());
+  register(() => dataInstance, name, []);
 }
 
 export function fetch(dependencies) {

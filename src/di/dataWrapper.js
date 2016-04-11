@@ -8,15 +8,11 @@ export default function(dataObject) {
       this.subscribers.push(callback);
     },
 
-    set(key, value) {
-      if (this.data.hasOwnProperty(key) && this.data[key] !== value) {
-        this.data = {
-          ...this.data,
-          key: value
-        };
-        
-        this.dispatch(); 
-      }
+    set(state) {
+      this.data = {
+        ...state
+      };
+      this.dispatch(this.data);
     },
 
     dispatch(data) {

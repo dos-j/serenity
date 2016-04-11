@@ -1,10 +1,11 @@
 import App from 'App';
 import { ReactInjector } from 'serenitydi';
+import TodoListBase from 'TodoList';
 
 export const App1 = ReactInjector(App, {
-  'genericAction' : 'SampleAction2'
+  'genericAction' : 'SampleAction'
 }); 
 
-export const App2 = ReactInjector(App, {
-  'genericAction' : 'SampleAction'
-});  
+export const TodoList = ReactInjector(TodoListBase, {
+  'model' : 'TodoModel'
+});
