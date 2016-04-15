@@ -1,5 +1,6 @@
 import App from 'App';
 import { ReactInjector } from 'serenitydi';
+export TodoItem from './TodoItem';
 import TodoListBase from 'TodoList';
 
 export const App1 = ReactInjector(App, {
@@ -7,5 +8,8 @@ export const App1 = ReactInjector(App, {
 }); 
 
 export const TodoList = ReactInjector(TodoListBase, {
-  'model' : 'TodoModel'
+  'model' : 'TodoModel',
+  'deleteAction': 'DeleteTodoItemAction'
 });
+
+

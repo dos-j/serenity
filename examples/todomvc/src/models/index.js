@@ -1,6 +1,5 @@
 import serenity from 'serenitydi';
 
-
 const model = {
   items: ['Hello, World']
 };
@@ -11,10 +10,18 @@ serenity.registerState(() => {
 
 
 serenity.register((model) => {
-  return function(item) {
-    const currentData = model.data;
-    currentData.items.push(item);
-    model.set(currentData);
-  }
 
+  return function(item) {
+    model.items = [
+      ...model.items,
+      item
+    ];
+  }
 }, 'SampleAction', ['TodoModel']);
+
+serenity.register((model) => {
+
+  return function(idx) {
+    model.items = model.items.filter((item, index) => index !== idx);
+  }
+}, 'DeleteTodoItemAction', ['TodoModel']);

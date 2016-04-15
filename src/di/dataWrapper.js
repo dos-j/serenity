@@ -1,26 +1,28 @@
 
-export default function(dataObject) {
-  return {
-    
-    subscribers: [],
+const subscriptions = new WeakMap();
 
-    subscribe(callback) {
-      this.subscribers.push(callback);
+export default function observe(dataObject) {
+
+  const observable = new Proxy(dataObject, {
+    get(target, key) {
+      return target[key];
     },
 
-    set(state) {
-      this.data = {
-        ...state
-      };
-      this.dispatch(this.data);
-    },
+    set(target, key, value) {
+      target[key] = value;
 
-    dispatch(data) {
-      this.subscribers.forEach(subscriber => subscriber(this.data));
-    },
-
-    data: {
-      ...dataObject
+      subscriptions.get(observable).forEach(func => func(observable));
+      return true;
     }
-  };
+  });
+
+  subscriptions.set(observable, []);
+  observable.subscribe = subscribe.bind(observable, observable);
+
+  return observable;
+}
+
+export function subscribe(observable, func) {
+
+  subscriptions.get(observable).push(func)
 }

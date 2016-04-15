@@ -1,4 +1,6 @@
 import React from 'react';
+import { TodoItem } from './index';
+
 
 class TodoList extends React.Component {
 
@@ -10,15 +12,20 @@ class TodoList extends React.Component {
     const {
       model
     } = this.props;
+
     return (
       <ul>
         {
-         model.data.items.map((item, idx) => {
-           return <li key={'item' + idx}> {item} </li>;       
+         model.items.map((item, idx) => {
+           return <TodoItem key={'todoitem-' + idx} value={item} ref={idx} onDelete={this.onDelete.bind(this, idx)} />;       
           })
         }
       </ul>
     );
+  }
+
+  onDelete(idx) {
+    this.props.deleteAction(idx);
   }
 }
 
