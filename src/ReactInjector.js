@@ -16,18 +16,17 @@ function getPropsFromInjectables(injectables) {
 
 export default function(WrappedComponent, injectables) {
 
-  const propsToInject = getPropsFromInjectables(injectables); 
-
   return class ReactInjectorComponent extends Component {
 
     constructor(props) {
       super(props);
+      this.propsToInject = getPropsFromInjectables(injectables);
       this.onUpdate = this.onUpdate.bind(this);
     }
 
     componentDidMount() {
-      Object.keys(propsToInject).forEach(item => {
-        const dependency = propsToInject[item];
+      Object.keys(this.propsToInject).forEach(item => {
+        const dependency = this.propsToInject[item];
 
         if (typeof dependency.subscribe === 'function') {
           dependency.subscribe(this.onUpdate);
@@ -46,7 +45,7 @@ export default function(WrappedComponent, injectables) {
 
       return createElement(WrappedComponent, {
        ...this.props,
-       ...propsToInject
+       ...this.propsToInject
      }); 
     }
   };
