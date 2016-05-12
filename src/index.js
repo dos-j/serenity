@@ -2,6 +2,6 @@ import * as injector from './di/injector';
 
 export default injector;
 
-if(window) {
+if (typeof window === 'object') {
   window.serenity = injector;
 }
