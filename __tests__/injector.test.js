@@ -1,8 +1,6 @@
-import 'babel-polyfill';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
+jest.unmock('../src/di/injector.js');
 import * as Injector from '../src/di/injector';
+import dataWrapperMock from '../src/di/dataWrapper';
 
 describe('Injector', () => {
 
@@ -27,7 +25,7 @@ describe('Injector', () => {
       };
 
       const result = Injector.fetch(["testService"]);
-      expect(result[0]).to.equal(service1Response);
+      expect(result[0]).toBe(service1Response);
     });
 
     it('returns multiple dependencies', () => {
@@ -44,8 +42,8 @@ describe('Injector', () => {
           service: () => service2Response
       };
       const result = Injector.fetch(["testService", "testService2"]);
-      expect(result[0]).to.equal(service1Response);
-      expect(result[1]).to.equal(service2Response);
+      expect(result[0]).toBe(service1Response);
+      expect(result[1]).toBe(service2Response);
     });
   });
 
@@ -61,25 +59,27 @@ describe('Injector', () => {
       };  
       Injector.register(dependency, 'dep1', []);
 
-      expect(Injector.services['dep1'].service).to.equal(dependency);
+      expect(Injector.services['dep1'].service).toBe(dependency);
     });
   });
 
 
   describe('registering data Injector.services', () => {
 
-   it('registers a data object', () => {
+    it('registers a data object', () => {
 
-     Injector.registerState(() => {
-      return {
+      const state = {
         'test': 'somethingElse'
-       };
-     }, 'SomeState');
+      };
+      Injector.registerState(() => {
+        return state;
+      }, 'SomeState');
 
-     const registeredStateService = Injector.services['SomeState'].service();
-     expect(registeredStateService.test).to.equal('somethingElse');
-   }); 
-  
+      const registeredStateService = Injector.services['SomeState'].service();
+      expect(dataWrapperMock).toBeCalled();
+      expect(dataWrapperMock.mock.calls[0][0]).toBe(state);
+    }); 
+
   });
 
   function generateDependency(val) {

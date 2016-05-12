@@ -3,26 +3,34 @@ const subscriptions = new WeakMap();
 
 export default function observe(dataObject) {
 
-  const observable = new Proxy(dataObject, {
-    get(target, key) {
-      return target[key];
+  const observable = {
+    setState(newState) {
+      if (typeof newState !== typeof dataObject) {
+        throw `new state must be of type ${typeof dataObject}`;
+      }
+
+      Object.keys(newState).forEach(key => this[key] = newState[key]);
+      notify(observable, this);
     },
-
-    set(target, key, value) {
-      target[key] = value;
-
-      subscriptions.get(observable).forEach(func => func(observable));
-      return true;
-    }
-  });
+    ...dataObject
+  };
 
   subscriptions.set(observable, []);
   observable.subscribe = subscribe.bind(observable, observable);
+  observable.setState = observable.setState.bind(observable);
 
   return observable;
 }
 
 export function subscribe(observable, func) {
 
+  if (typeof func !== 'function') {
+    throw `subscriptions must be of type function, Got ${typeof func}`;
+  }
+
   subscriptions.get(observable).push(func)
+}
+
+export function notify(observable) {
+  subscriptions.get(observable).forEach(observer => observer(observable));
 }
