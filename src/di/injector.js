@@ -33,6 +33,6 @@ export function registerState(service, name) {
 }
 
 export function fetch(dependencies) {
-  return dependencies.map(serviceName => this.runService(serviceName));
+  return dependencies.map(serviceName => runService(serviceName));
 }
 
