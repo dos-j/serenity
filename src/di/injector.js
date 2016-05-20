@@ -2,7 +2,9 @@ import dataWrapper from './dataWrapper';
 
 export const services = {};
 
-export function register(service, name, dependencies) {
+export function register(name, dependencies, service) {
+
+  console.log(service);
   if (typeof service !== 'function') {
     throw 'Tried to register a service which is not a function';
   }
@@ -16,7 +18,7 @@ export function register(service, name, dependencies) {
     dependencies
   };
 
-  runService(name);  
+  runService(name);
 }
 
 export function runService(serviceName) {
@@ -27,9 +29,10 @@ export function runService(serviceName) {
   return services[serviceName].service(...injectables);
 }
 
-export function registerState(service, name) {
+export function registerState(name, service) {
+  console.log(service);
   const dataInstance = dataWrapper(service());
-  register(() => dataInstance, name, []);
+  register(name, [], () => dataInstance);
 }
 
 export function fetch(dependencies) {
