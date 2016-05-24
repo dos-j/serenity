@@ -4,7 +4,6 @@ export const services = {};
 
 export function register(name, dependencies, service) {
 
-  console.log(service);
   if (typeof service !== 'function') {
     throw 'Tried to register a service which is not a function';
   }
