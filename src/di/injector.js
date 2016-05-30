@@ -16,8 +16,6 @@ export function register(name, dependencies, service) {
     service,
     dependencies
   };
-
-  runService(name);
 }
 
 export function runService(serviceName) {
@@ -29,7 +27,6 @@ export function runService(serviceName) {
 }
 
 export function registerState(name, service) {
-  console.log(service);
   const dataInstance = dataWrapper(service());
   register(name, [], () => dataInstance);
 }
