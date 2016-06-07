@@ -49,3 +49,36 @@ service1(); //test will be logged
 
 ```
 
+####ES6 Classes
+
+```javascript
+
+import serenity from 'serenitydi';
+
+class Service {
+  constructor(service2) {
+    this.service2 = service2;
+  }
+
+  sayWhateverComesFromService2() {
+    console.log(this.service2());
+  }
+}
+
+serenity.register(
+  'Service1',
+  [ 'Service2' ],
+  (service2) => new Service(service2) 
+);
+
+serenity.register(
+  'Service2',
+  [],
+  () => () => 'Hello, World!'
+);
+
+const service = serenity.fetch('Service1');
+
+service.sayWhateverComesFromService2(); //logs Hello, World!
+
+```
