@@ -25,7 +25,7 @@ describe('Injector', () => {
           service: () => service2Response
       };
 
-      const result = Injector.fetch([ 'testService' ]);
+      const result = Injector.fetchAll([ 'testService' ]);
       expect(result[0]).toBe(service1Response);
     });
 
@@ -42,10 +42,32 @@ describe('Injector', () => {
           dependencies: [],
           service: () => service2Response
       };
-      const result = Injector.fetch([ 'testService', 'testService2' ]);
+      const result = Injector.fetchAll([ 'testService', 'testService2' ]);
       expect(result[0]).toBe(service1Response);
       expect(result[1]).toBe(service2Response);
     });
+
+    it('returns a single dependency not wrapped in an array', () => {
+      const service1Response = 'test';
+      const service2Response = 'test2';
+
+      Injector.services['testService'] = {
+          dependencies: ['testService2'],
+          service: testService => () => {
+            return testService();
+          }
+      };
+
+      Injector.services['testService2'] = {
+          dependencies: [],
+          service: () => () => service2Response
+      };
+
+      const result = Injector.fetch('testService');
+
+      expect(result()).toBe(service2Response);
+    });
+
   });
 
   describe('registering dependencies', () => {

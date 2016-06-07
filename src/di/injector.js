@@ -18,6 +18,11 @@ export function register(name, dependencies, service) {
   };
 }
 
+/**
+ * invoke a service by name
+ *
+ * @param string
+ */
 export function runService(serviceName) {
   const injectables = services[serviceName].dependencies.map(
     injectName => runService(injectName)
@@ -26,12 +31,23 @@ export function runService(serviceName) {
   return services[serviceName].service(...injectables);
 }
 
+export function fetch(serviceName) {
+  return runService(serviceName);
+}
+
+/**
+ * @param string - name
+ * @param function - service which returns state object
+ */
 export function registerState(name, service) {
   const dataInstance = dataWrapper(service());
   register(name, [], () => dataInstance);
 }
 
-export function fetch(dependencies) {
+/**
+ * @param array - dependencies
+ */ 
+export function fetchAll(dependencies) {
   return dependencies.map(serviceName => runService(serviceName));
 }
 

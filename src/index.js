@@ -4,7 +4,8 @@ const injector = {
   register,
   registerState,
   runService,
-  fetch
+  fetch,
+  fetchAll
 };
 
 export default injector;
