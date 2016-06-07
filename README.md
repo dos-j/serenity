@@ -42,4 +42,10 @@ serenity.register(
   }
 );
 
+//run the application
+const service1 = serenity.fetch('Service1');
+
+service1(); //test will be logged
+
 ```
+

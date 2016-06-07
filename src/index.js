@@ -1,4 +1,4 @@
-import { register, runService, registerState, fetch } from './di/injector';
+import { register, runService, registerState, fetch, fetchAll } from './di/injector';
 
 const injector = {
   register,
