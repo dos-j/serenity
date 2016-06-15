@@ -5,11 +5,11 @@ export const services = {};
 export function register(name, dependencies, service) {
 
   if (typeof service !== 'function') {
-    throw `Tried to register service '${name}' which is not a function`;
+    throw new Error(`Tried to register service '${name}' which is not a function`);
   }
 
   if (services.hasOwnProperty(name)) {
-    throw `Service with name '${name}' already registered`;
+    throw new Error(`Service with name '${name}' already registered`);
   }
 
   services[name] = {

@@ -6,7 +6,7 @@ export default function observe(dataObject) {
   const observable = {
     setState(newState) {
       if (typeof newState !== typeof dataObject) {
-        throw `new state must be of type ${typeof dataObject}`;
+        throw new Error(`new state must be of type ${typeof dataObject}`);
       }
 
       Object.keys(newState).forEach(key => this[key] = newState[key]);
@@ -25,10 +25,10 @@ export default function observe(dataObject) {
 export function subscribe(observable, func) {
 
   if (typeof func !== 'function') {
-    throw `subscriptions must be of type function, Got ${typeof func}`;
+    throw new Error(`subscriptions must be of type function, Got ${typeof func}`);
   }
 
-  subscriptions.get(observable).push(func)
+  subscriptions.get(observable).push(func);
 }
 
 export function notify(observable) {
