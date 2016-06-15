@@ -27,7 +27,7 @@ export function register(name, dependencies, service) {
 export function runService(serviceName) {
 
   if (!services.hasOwnProperty(serviceName)) {
-    throw new Error(`Service with name '${name}' has not been registered`);
+    throw new Error(`Service with name '${serviceName}' has not been registered`);
   }
 
   const injectables = services[serviceName].dependencies.map(
