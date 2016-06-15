@@ -21,9 +21,15 @@ export function register(name, dependencies, service) {
 /**
  * invoke a service by name
  *
- * @param string
+ * @param {string} serviceName - Name of the service to instantiate
+ * @return {any} Service that has been instantiated
  */
 export function runService(serviceName) {
+
+  if (!services.hasOwnProperty(serviceName)) {
+    throw new Error(`Service with name '${name}' has not been registered`);
+  }
+
   const injectables = services[serviceName].dependencies.map(
     injectName => runService(injectName)
   );
@@ -36,8 +42,9 @@ export function fetch(serviceName) {
 }
 
 /**
- * @param string - name
- * @param function - service which returns state object
+ * @param {string} name - name
+ * @param {function} service - service which returns state object
+ * @return {undefined}
  */
 export function registerState(name, service) {
   const dataInstance = dataWrapper(service());
@@ -45,8 +52,9 @@ export function registerState(name, service) {
 }
 
 /**
- * @param array - dependencies
- */ 
+ * @param {array} dependencies - dependencies
+ * @return {array} array of retrieved dependencies
+ */
 export function fetchAll(dependencies) {
   return dependencies.map(serviceName => runService(serviceName));
 }
