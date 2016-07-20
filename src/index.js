@@ -1,11 +1,12 @@
-import { register, runService, registerState, fetch, fetchAll } from './di/injector';
+import { register, runService, registerState, fetch, fetchAll, generateDependencyTree } from './di/injector';
 
 const injector = {
   register,
   registerState,
   runService,
   fetch,
-  fetchAll
+  fetchAll,
+  generateDependencyTree
 };
 
 export default injector;
