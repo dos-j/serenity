@@ -105,6 +105,119 @@ describe('Injector', () => {
 
   });
 
+  describe('Generating a dependency tree', () => {
+
+    it('generates a tree for the dependencies', () => {
+
+      Injector.services['A'] = {
+        dependencies: [ 'A.1', 'A.2', 'A.3' ]
+      };
+
+      Injector.services['A.1'] = {
+        dependencies: [ 'A.1.1', 'A.1.2' ]
+      };
+
+      Injector.services['A.1.1'] = {
+        dependencies: []
+      };
+
+      Injector.services['A.1.2'] = {
+        dependencies: []
+      };
+
+      Injector.services['A.2'] = {
+        dependencies: []
+      };
+
+      Injector.services['A.3'] = {
+        dependencies: []
+      };
+
+      expect(Injector.generateDependencyTree('A')).toEqual({
+        'A.1': {
+          'A.1.1': {},
+          'A.1.2': {}
+        },
+        'A.2': {},
+        'A.3': {}
+      });
+
+    });
+
+    it('will handle missing dependencies', () => {
+
+      Injector.services['B'] = {
+        dependencies: [ 'B.1', 'B.2', 'B.3' ]
+      };
+
+      Injector.services['B.1'] = {
+        dependencies: [ 'B.1.1', 'B.1.2' ]
+      };
+
+      Injector.services['B.1.1'] = {
+        dependencies: []
+      };
+
+      Injector.services['B.2'] = {
+        dependencies: []
+      };
+
+      Injector.services['B.3'] = {
+        dependencies: []
+      };
+
+      expect(Injector.generateDependencyTree('B')).toEqual({
+        'B.1': {
+          'B.1.1': {},
+          'B.1.2': '[missing dependency]'
+        },
+        'B.2': {},
+        'B.3': {}
+      });
+
+    });
+
+    it('will not infinitely recurse a tree', () => {
+
+      Injector.services['C'] = {
+        dependencies: [ 'C.1', 'C.2', 'C.3' ]
+      };
+
+      Injector.services['C.1'] = {
+        dependencies: [ 'C.1.1', 'C.1.2' ]
+      };
+
+      Injector.services['C.1.1'] = {
+        dependencies: []
+      };
+
+      Injector.services['C.1.2'] = {
+        dependencies: [ 'C.1' ]
+      };
+
+      Injector.services['C.2'] = {
+        dependencies: []
+      };
+
+      Injector.services['C.3'] = {
+        dependencies: []
+      };
+
+      expect(Injector.generateDependencyTree('C')).toEqual({
+        'C.1': {
+          'C.1.1': {},
+          'C.1.2': {
+            'C.1': '[circular dependency]'
+          }
+        },
+        'C.2': {},
+        'C.3': {}
+      });
+
+    });
+
+  });
+
   function generateDependency(val) {
     return function() {
       return val;

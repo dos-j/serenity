@@ -59,3 +59,29 @@ export function fetchAll(dependencies) {
   return dependencies.map(serviceName => runService(serviceName));
 }
 
+export function generateDependencyTree(name, alreadyExploredDependencies = []) {
+  if (!services[name]) {
+    return '[missing dependency]';
+  }
+
+  const { dependencies } = services[name];
+  return dependencies
+    .map(dependencyName => {
+      if (alreadyExploredDependencies.indexOf(dependencyName) >= 0) {
+        return [ dependencyName, '[circular dependency]' ];
+      }
+
+      return [
+        dependencyName,
+        generateDependencyTree(dependencyName, [
+            ...alreadyExploredDependencies,
+            ...dependencies
+        ])
+      ];
+    })
+    .reduce((node, [ dependencyName, dependencyNode ]) => {
+      node[dependencyName] = dependencyNode;
+      return node;
+    }, {});
+}
+
